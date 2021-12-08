@@ -39,6 +39,9 @@
         </v-row>
       </v-form>
     </div>
+    <v-snackbar top v-model="alert.show" :timeout="alert.timeout">
+      <div class="alert">{{ alert.message }}</div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -50,6 +53,11 @@ export default {
       form: {
         username: "",
         password: "",
+      },
+      alert: {
+        show: false,
+        message: "",
+        timeout: 4000,
       },
     };
   },
@@ -66,10 +74,12 @@ export default {
       const { message, token } = await this.doLogin(data);
 
       if (!token) {
-         return alert(message);
+        this.alert.message = message;
+        this.alert.show = true;
+        return;
       }
 
-      await  this.$router.push('/test')
+      await this.$router.push("/test");
 
       console.log(message);
     },
@@ -107,7 +117,6 @@ export default {
   margin: auto;
   text-align: center;
   width: 80%;
-  font-family: "Open Sans", sans-serif;
 }
 
 .btn {
@@ -121,6 +130,10 @@ export default {
 
 .icon {
   opacity: 0.8;
+}
+
+.alert {
+  font-size: x-large;
 }
 </style>
          
