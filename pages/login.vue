@@ -1,7 +1,7 @@
 <template>
   <div class="bg-image">
     <div class="login-container">
-      <v-form class="form-container">
+      <v-form class="form-container" @submit.prevent="onSubmit">
         <v-row>
           <v-col>
             <v-icon size="150" dark class="icon"
@@ -12,8 +12,16 @@
 
         <v-row>
           <v-col cols="12">
-            <v-text-field dark filled rounded outlined label="Korisničko ime" />
             <v-text-field
+              v-model="form.username"
+              dark
+              filled
+              rounded
+              outlined
+              label="Korisničko ime"
+            />
+            <v-text-field
+              v-model="form.password"
               dark
               filled
               rounded
@@ -34,7 +42,44 @@
   </div>
 </template>
 
+<script>
+import { mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      form: {
+        username: "",
+        password: "",
+      },
+    };
+  },
 
+  methods: {
+    ...mapActions("auth", ["doLogin"]),
+
+    async onSubmit() {
+      const data = {
+        username: this.form.username,
+        password: this.form.password,
+      };
+
+      const { message, token } = await this.doLogin(data);
+
+      if (!token) {
+       alert(message);
+      }
+
+      console.log(message);
+    },
+  },
+
+  head() {
+    return {
+      title: "Prijava",
+    };
+  },
+};
+</script>
 
 <style scoped>
 .bg-image {
@@ -53,7 +98,6 @@
   position: relative;
   background-color: rgba(0, 0, 0, 0.3);
   display: flex;
-  align-items: center;
   overflow: auto;
 }
 
