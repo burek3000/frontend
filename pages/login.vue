@@ -66,8 +66,10 @@ export default {
       const { message, token } = await this.doLogin(data);
 
       if (!token) {
-       alert(message);
+         return alert(message);
       }
+
+      await  this.$router.push('/test')
 
       console.log(message);
     },
