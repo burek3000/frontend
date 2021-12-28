@@ -19,7 +19,7 @@
     </div>
 
     <div class="image-container" v-show="showFace">
-      <v-img :src="images[imageId].url"></v-img>
+      <v-img :src="images[imageId]"></v-img>
     </div>
 
     <div class="image-container" v-show="showPlus">
@@ -63,7 +63,7 @@
           rounded
           x-large
           outlined
-          >{{ "bijes" }}</v-btn
+          >{{ "srdžba" }}</v-btn
         >
       </v-row>
       <v-row>
@@ -90,21 +90,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      images: [
-        { url: require("~/assets/images/07F_AN_C.JPG") },
-        { url: require("~/assets/images/09F_SA_O.JPG") },
-        { url: require("~/assets/images/11F_HA_X.JPG") },
-        { url: require("~/assets/images/21M_HA_C.JPG") },
-        { url: require("~/assets/images/28M_DI_C.JPG") },
-        { url: require("~/assets/images/07F_AN_C.JPG") },
-        { url: require("~/assets/images/09F_SA_O.JPG") },
-        { url: require("~/assets/images/11F_HA_X.JPG") },
-        { url: require("~/assets/images/21M_HA_C.JPG") },
-        { url: require("~/assets/images/28M_DI_C.JPG") },
-      ],
       imageId: 0,
       showFace: false,
       showAnswers: false,
@@ -113,6 +103,10 @@ export default {
       showEnd: false,
       end: false,
     };
+  },
+
+  async fetch({ store }) {
+    await Promise.all([await store.dispatch("test/fetchImages")]);
   },
 
   methods: {
@@ -142,10 +136,13 @@ export default {
       setTimeout(this.removePlus, 1000);
     },
   },
-    head() {
+  head() {
     return {
       title: "Test",
     };
+  },
+  computed: {
+    ...mapGetters({ images: "test/getImageUrls" }),
   },
 };
 </script>
