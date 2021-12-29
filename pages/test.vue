@@ -9,7 +9,7 @@
         započeli test kliknite na gumb ispod.
       </p>
 
-      <v-btn class="btn-start" dark rounded x-large @click="nextImage()">
+      <v-btn class="btn-start" dark rounded x-large @click="nextImage('start')">
         započni test
       </v-btn>
     </div>
@@ -30,7 +30,7 @@
       <v-row>
         <v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('SA')"
           dark
           rounded
           x-large
@@ -39,7 +39,7 @@
         >
         <v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('HA')"
           dark
           rounded
           x-large
@@ -50,7 +50,7 @@
       <v-row>
         <v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('FE')"
           dark
           rounded
           x-large
@@ -58,7 +58,7 @@
           >{{ "strah" }}</v-btn
         ><v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('AN')"
           dark
           rounded
           x-large
@@ -69,7 +69,7 @@
       <v-row>
         <v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('DI')"
           dark
           rounded
           x-large
@@ -77,7 +77,7 @@
           >{{ "gađenje" }}</v-btn
         ><v-btn
           class="btn-answer"
-          @click="nextImage()"
+          @click="nextImage('SP')"
           dark
           rounded
           x-large
@@ -102,6 +102,9 @@ export default {
       showPlus: false,
       showEnd: false,
       end: false,
+      answers: [],
+      startTime: "",
+      endTime: "",
     };
   },
 
@@ -110,10 +113,26 @@ export default {
   },
 
   methods: {
+    currentTime() {
+      const timeNow = new Date();
+      return (
+        timeNow.getDate().toString() +
+        "." +
+        timeNow.getMonth().toString() +
+        "." +
+        timeNow.getFullYear().toString() +
+        ". " +
+        timeNow.getHours().toString() +
+        ":" +
+        timeNow.getMinutes().toString() +
+        ":" +
+        timeNow.getSeconds().toString()
+      );
+    },
     removePlus() {
       this.showPlus = false;
       this.showFace = true;
-      setTimeout(this.removeImage, 300);
+      setTimeout(this.removeImage, 200);
     },
     removeImage() {
       this.showFace = false;
@@ -124,11 +143,16 @@ export default {
         this.end = true;
       }
     },
-
-    nextImage() {
+    nextImage(answer) {
+      if (answer == "start") {
+        this.startTime = this.currentTime();
+      } else {
+        this.answers.push(answer);
+      }
       this.showAnswers = false;
       if (this.end) {
         this.showEnd = true;
+        this.endTime = this.currentTime();
         return;
       }
       this.showStart = false;

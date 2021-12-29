@@ -80,8 +80,6 @@ export default {
       }
 
       await this.$router.push("/test");
-
-      console.log(message);
     },
   },
 

@@ -25,7 +25,7 @@ export const mutations = {
 
 
 export const actions = {
-    async doLogin({ commit }, loginData) {
+    async doLogin({ commit, dispatch }, loginData) {
 
         try {
             const data = await this.$api.$post('/login', loginData) || {}
@@ -36,6 +36,8 @@ export const actions = {
 
             await commit('SET_TOKEN', data.token)
 
+            await dispatch('fetchUserInfo')
+
             return data;
         }
 
@@ -43,5 +45,26 @@ export const actions = {
             console.log(e);
             return null;
         }
-    }
+    },
+
+    async fetchUserInfo({
+        commit,
+        state
+    }) {
+        try {
+            if (!state.token) {
+                return null
+            }
+            const data = await this.$api.$get('/user/info')
+
+            if (data.id) {
+                await commit('SET_USER', data)
+            }
+
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    },
 }
