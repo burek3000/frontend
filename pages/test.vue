@@ -63,7 +63,7 @@
           rounded
           x-large
           outlined
-          >{{ "srdžba" }}</v-btn
+          >{{ "ljutnja" }}</v-btn
         >
       </v-row>
       <v-row>

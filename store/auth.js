@@ -1,3 +1,6 @@
+
+const COOKIE_NAME = 'session-token'
+
 export const state = () => ({
     user: null,
     token: null
@@ -25,7 +28,7 @@ export const mutations = {
 
 
 export const actions = {
-    async doLogin({ commit, dispatch }, loginData) {
+    async doLogin({ dispatch }, loginData) {
 
         try {
             const data = await this.$api.$post('/login', loginData) || {}
@@ -34,9 +37,9 @@ export const actions = {
                 return data
             }
 
-            await commit('SET_TOKEN', data.token)
+            await dispatch('setToken', { token: data.token })
 
-            await dispatch('fetchUserInfo')
+            await dispatch('fetchUserInfo', data.token)
 
             return data;
         }
@@ -47,24 +50,74 @@ export const actions = {
         }
     },
 
-    async fetchUserInfo({
-        commit,
-        state
-    }) {
+    async fetchUserInfo({ commit, state }) {
         try {
             if (!state.token) {
                 return null
             }
             const data = await this.$api.$get('/user/info')
-
             if (data.id) {
                 await commit('SET_USER', data)
             }
-
+            return data
         }
         catch (e) {
             console.log(e);
             return null;
         }
     },
+
+    getTokenFromCookie() {
+        return this.$cookies.get(COOKIE_NAME)
+    },
+
+
+    async setToken({ commit }, { token }) {
+        try {
+            await commit('SET_TOKEN', token)
+
+            this.$cookies.set(COOKIE_NAME, token,
+                {
+                    path: '/',
+                }
+            )
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    },
+
+    async loadToken({ dispatch, commit }) {
+        try {
+            const token = await dispatch('getTokenFromCookie')
+            if (!token) {
+                return null
+            }
+            await commit('SET_TOKEN', token)
+            return token
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+
+    },
+
+    async nuxtServerInit({ dispatch }) {
+        try {
+            const token = await dispatch('loadToken')
+
+            if (token) {
+                await dispatch('fetchUserInfo')
+            }
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+
+    }
+
+
 }

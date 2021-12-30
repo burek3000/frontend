@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -63,7 +63,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["doLogin"]),
+    ...mapActions("auth", ["doLogin", "fetchUserInfo"]),
 
     async onSubmit() {
       const data = {
@@ -79,10 +79,15 @@ export default {
         return;
       }
 
-      await this.$router.push("/test");
+      const user = await this.fetchUserInfo();
+      if (user.role == "user") {
+        await this.$router.push("/test");
+      } else if (user.role == "expert") {
+        await this.$router.push("/results");
+      }
     },
   },
-
+ 
   head() {
     return {
       title: "Prijava",
