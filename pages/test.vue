@@ -86,6 +86,10 @@
         >
       </v-row>
     </div>
+
+    <v-snackbar top v-model="alert.show" :timeout="alert.timeout">
+      <div class="alert">{{ alert.message }}</div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -105,6 +109,11 @@ export default {
       answers: [],
       startTime: "",
       endTime: "",
+      alert: {
+        show: false,
+        message: "",
+        timeout: 4000,
+      },
     };
   },
 
@@ -113,15 +122,17 @@ export default {
   },
 
   methods: {
+    ...mapActions("test", ["submitResults"]),
+
     currentTime() {
       const timeNow = new Date();
       return (
-        timeNow.getDate().toString() +
-        "." +
-        timeNow.getMonth().toString() +
-        "." +
         timeNow.getFullYear().toString() +
-        ". " +
+        "-" +
+        timeNow.getMonth().toString() +
+        "-" +
+        timeNow.getDate().toString() +
+        " " +
         timeNow.getHours().toString() +
         ":" +
         timeNow.getMinutes().toString() +
@@ -143,7 +154,7 @@ export default {
         this.end = true;
       }
     },
-    nextImage(answer) {
+    async nextImage(answer) {
       if (answer == "start") {
         this.startTime = this.currentTime();
       } else {
@@ -153,11 +164,27 @@ export default {
       if (this.end) {
         this.showEnd = true;
         this.endTime = this.currentTime();
+        await this.handleSubmit();
         return;
       }
       this.showStart = false;
       this.showPlus = true;
       setTimeout(this.removePlus, 1000);
+    },
+
+    async handleSubmit() {
+      const data = {
+        startTime: this.startTime,
+        endTime: this.endTime,
+        answers: this.answers,
+        questions: this.imageNames,
+      };
+
+      const returnData  = await this.submitResults(data);
+      console.log(returnData)
+      this.alert.message = returnData.data.message
+      this.alert.show = true;
+      return;
     },
   },
   head() {
@@ -167,6 +194,7 @@ export default {
   },
   computed: {
     ...mapGetters({ images: "test/getImageUrls" }),
+    ...mapGetters({ imageNames: "test/getImageNames" }),
   },
 };
 </script>
@@ -220,5 +248,10 @@ export default {
 
 .answers {
   margin: auto;
+}
+
+.alert {
+  font-size: x-large;
+  color : white;
 }
 </style>

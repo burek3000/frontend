@@ -41,5 +41,9 @@ export const actions = {
             console.log(e);
             return null;
         }
-    }
+    },
+
+    async submitResults(_context, data) {
+        return await this.$api.post('/test/saveResults', data)
+    },
 }
