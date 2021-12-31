@@ -97,6 +97,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
+  middleware: ["require-auth"],
   data() {
     return {
       imageId: 0,
@@ -180,9 +181,9 @@ export default {
         questions: this.imageNames,
       };
 
-      const returnData  = await this.submitResults(data);
-      console.log(returnData)
-      this.alert.message = returnData.data.message
+      const returnData = await this.submitResults(data);
+      console.log(returnData);
+      this.alert.message = returnData.data.message;
       this.alert.show = true;
       return;
     },
@@ -203,8 +204,8 @@ export default {
 <style scoped>
 .app-container {
   display: flex;
-  background: black;
-  height: 100vh;
+  background-color: black;
+  height: 100%;
   overflow: auto;
 }
 
@@ -252,6 +253,6 @@ export default {
 
 .alert {
   font-size: x-large;
-  color : white;
+  color: white;
 }
 </style>

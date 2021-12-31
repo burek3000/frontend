@@ -8,6 +8,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
+  middleware: ["require-auth"],
   data() {
     return {};
   },
@@ -17,6 +18,11 @@ export default {
   },
   computed: {
     ...mapGetters({ results: "result/getResults" }),
+  },
+    head() {
+    return {
+      title: "Rezultati",
+    };
   },
 };
 </script>

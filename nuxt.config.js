@@ -43,6 +43,10 @@ export default {
     '@nuxtjs/axios',
     ['cookie-universal-nuxt', { parseJSON: false }]
   ],
+  router: {
+    middleware: 'require-auth'
+  },
+ 
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

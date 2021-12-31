@@ -14,6 +14,9 @@ export const getters = {
     getToken({ token }) {
         return token
     },
+    isLoggedIn({ user }) {
+        return Boolean(user && user.id);
+    }
 }
 
 
@@ -117,7 +120,13 @@ export const actions = {
             return null;
         }
 
-    }
+    },
+
+    doLogout({ commit }) {
+        commit('SET_TOKEN', null)
+        commit('SET_USER', null)
+        this.$cookies.remove(COOKIE_NAME)
+    },
 
 
 }

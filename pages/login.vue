@@ -32,7 +32,7 @@
           </v-col>
 
           <v-col cols="12">
-            <v-btn class="btn" dark rounded block x-large type="submit">
+            <v-btn class="btn"  dark rounded block x-large type="submit">
               Prijavi se
             </v-btn>
           </v-col>
@@ -129,6 +129,7 @@ export default {
     #5c258d 51%,
     #4389a2 100%
   );
+  
 }
 
 .icon {
