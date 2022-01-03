@@ -130,7 +130,7 @@ export default {
       return (
         timeNow.getFullYear().toString() +
         "-" +
-        timeNow.getMonth().toString() +
+        (timeNow.getMonth() + 1).toString() +
         "-" +
         timeNow.getDate().toString() +
         " " +
