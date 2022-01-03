@@ -1,7 +1,7 @@
 <template >
   <div class="app-container">
-    <div class="startEnd-container" v-show="showStart">
-      <p class="text">
+    <div class="start-container" v-show="showStart">
+      <p class="text-start">
         Test se sastoji od 10 različitih fotografija stvarnih osoba od kojih
         svaka prikazuje određenu emociju. Fotografije će se prikazati jedna po
         jedna. Svako lice prikazuje se 0.2 sekunde i zatim se prekriva. Od 6
@@ -14,8 +14,9 @@
       </v-btn>
     </div>
 
-    <div class="startEnd-container" v-show="showEnd">
-      <p class="text">Test je završen !</p>
+    <div class="end-container" v-show="showEnd">
+      <p class="text-end">Test je završen !</p>
+      <v-img class="smailey-image" :src="smailey.image"></v-img>
     </div>
 
     <div class="image-container" v-show="showFace">
@@ -85,6 +86,12 @@
           >{{ "iznenađenje" }}</v-btn
         >
       </v-row>
+
+      <v-row  justify="center" >
+        <p class="counter">
+        {{this.imageId}}/10
+      </p>
+      </v-row>
     </div>
 
     <v-snackbar top v-model="alert.show" :timeout="alert.timeout">
@@ -114,6 +121,9 @@ export default {
         show: false,
         message: "",
         timeout: 4000,
+      },
+      smailey: {
+        image: require("/home/mia/code/Završni/frontend/assets/images/smailey.png"),
       },
     };
   },
@@ -213,23 +223,47 @@ export default {
   margin: auto;
 }
 
-.startEnd-container {
+.start-container {
   height: 90%;
   width: 45%;
-  bottom: 0;
-  top: 0;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.text {
+.end-container {
+  background-image: url("~/assets/images/finish2-bg.jpg") !important;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+}
+
+.text-start {
   padding-top: 6rem;
   color: white;
   font-size: x-large;
   text-align: center;
   padding-bottom: 2rem;
+}
+
+.text-end {
+  padding-top: 6rem;
+  color: black;
+  font-size: x-large;
+  text-align: center;
+}
+
+.smailey-image {
+  height: 150px;
+  width: 150px;
+  margin: auto;
+}
+
+.counter{
+  color : gray;
+  font-size: x-large;
 }
 
 .btn-start {
