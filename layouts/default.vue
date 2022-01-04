@@ -1,6 +1,6 @@
 <template>
   <v-app
-    ><v-app-bar dense v-if="isLoggedIn">
+    ><v-app-bar color="deep-purple lighten-1" dense v-if="isLoggedIn">
       <v-spacer></v-spacer>
       <v-btn class="btn" x-large @click.prevent="handleLogout" text>
         Odjava
@@ -35,6 +35,4 @@ export default {
   text-transform: none;
   color: white;
 }
-
-
 </style>

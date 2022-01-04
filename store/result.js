@@ -31,4 +31,16 @@ export const actions = {
         }
     },
 
+    async deleteResults(_context, data) {
+        try {
+            console.log(data)
+            return await this.$api.post('/test/delete', data)
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+
+    },
+
 }
