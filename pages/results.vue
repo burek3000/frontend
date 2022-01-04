@@ -1,53 +1,77 @@
 <template>
   <div class="app-container">
     <div class="content-container">
-      <v-row justify="center">
-        <v-col>
-          <v-btn outlined color="deep-purple" @click="handleDelete()"
-            ><v-icon>mdi-delete</v-icon> Obriši označeno
-          </v-btn>
-        </v-col>
-        <v-spacer></v-spacer>
-
-        <v-col lg="1" md="2"> <v-subheader> Pretraži </v-subheader> </v-col>
-        <v-col lg="3" md="2">
-          <v-text-field v-model="search" outlined dense></v-text-field>
-        </v-col>
-        <v-col lg="1" md="2"> <v-subheader> Sortiraj</v-subheader> </v-col>
-        <v-col lg="3" md="2">
-          <v-select
-            dense
-            :items="headers"
-            v-model="selectedSort"
-            outlined
-            @input="sort"
-          ></v-select>
-        </v-col>
-      </v-row>
-
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="results"
-        :search="search"
-        :sort-by.sync="sortBy"
-        class="elevation-1"
-        disable-pagination
-        show-select
-        hide-default-footer
+      <v-tabs
+        background-color="#dcdcdc"
+        icons-and-text
+        active-class="active"
+        slider-color="white"
       >
-        <template slot="no-data">
-          <div>Nema testova za prikazati.</div>
-        </template>
-        <template
-          v-for="header in headers.filter((header) =>
-            header.hasOwnProperty('formatter')
-          )"
-          v-slot:[`item.${header.value}`]="{ value }"
-        >
-          {{ header.formatter(value) }}
-        </template>
-      </v-data-table>
+        <v-tab> Rezultati<v-icon>mdi-book-open-variant</v-icon></v-tab>
+        <v-tab> Dodaj korisnika <v-icon>mdi-account-plus</v-icon></v-tab>
+
+        <v-tab-item>
+          <v-card flat class="tab-content">
+            <v-row justify="center">
+              <v-col>
+                <v-btn outlined color="deep-purple" @click="handleDelete()"
+                  ><v-icon>mdi-delete</v-icon> Obriši označeno
+                </v-btn>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col lg="1" md="2">
+                <v-subheader> Pretraži </v-subheader>
+              </v-col>
+              <v-col lg="3" md="2">
+                <v-text-field v-model="search" outlined dense></v-text-field>
+              </v-col>
+              <v-col lg="1" md="2">
+                <v-subheader> Sortiraj</v-subheader>
+              </v-col>
+              <v-col lg="3" md="2">
+                <v-select
+                  dense
+                  :items="headers"
+                  v-model="selectedSort"
+                  outlined
+                  @input="sort"
+                ></v-select>
+              </v-col>
+            </v-row>
+
+            <v-data-table
+              v-model="selected"
+              :headers="headers"
+              :items="results"
+              :search="search"
+              :sort-by.sync="sortBy"
+              class="elevation-1"
+              disable-pagination
+              show-select
+              hide-default-footer
+            >
+              <template slot="no-data">
+                <div>Nema testova za prikazati.</div>
+              </template>
+              <template slot="no-results">
+                <div>Nema pronađenih rezultata.</div>
+              </template>
+              <template
+                v-for="header in headers.filter((header) =>
+                  header.hasOwnProperty('formatter')
+                )"
+                v-slot:[`item.${header.value}`]="{ value }"
+              >
+                {{ header.formatter(value) }}
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-card flat> </v-card>
+        </v-tab-item>
+      </v-tabs>
     </div>
   </div>
 </template>
@@ -143,7 +167,6 @@ export default {
   height: 100%;
   width: 70vw;
   margin: auto;
-  padding: 2rem;
   background-color: white;
 }
 
@@ -151,5 +174,14 @@ export default {
   padding: 2rem;
   height: 100%;
   background-color: #dcdcdc;
+}
+
+.tab-content {
+  padding: 2rem;
+}
+
+.active {
+  color: #7e57c2;
+  background-color: #ffff;
 }
 </style>
