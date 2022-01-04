@@ -77,6 +77,11 @@ export default {
           formatter: this.formatDate,
           filterable: false,
         },
+        {
+          text: "Trajanje testa",
+          value: "duration",
+          filterable: false,
+        },
       ],
     };
   },
@@ -119,11 +124,7 @@ export default {
     async handleDelete() {
       const testIds = this.selected.map((test) => test.id);
 
-      const data = {
-        testIds: testIds,
-      };
-
-      const returnData = await this.deleteResults(data);
+      const returnData = await this.deleteResults(testIds);
       console.log(returnData);
       await this.$store.dispatch("result/fetchTestResults");
     },
