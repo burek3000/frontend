@@ -87,10 +87,8 @@
         >
       </v-row>
 
-      <v-row  justify="center" >
-        <p class="counter">
-        {{this.imageId}}/10
-      </p>
+      <v-row justify="center">
+        <div class="counter" v-text="counter()"></div>
       </v-row>
     </div>
 
@@ -182,6 +180,12 @@ export default {
       this.showPlus = true;
       setTimeout(this.removePlus, 1000);
     },
+    counter() {
+      if (this.end) {
+        return "10/10";
+      }
+      return this.imageId + "/10";
+    },
 
     async handleSubmit() {
       const data = {
@@ -261,8 +265,8 @@ export default {
   margin: auto;
 }
 
-.counter{
-  color : gray;
+.counter {
+  color: gray;
   font-size: x-large;
 }
 
@@ -286,7 +290,7 @@ export default {
 }
 
 .alert {
-  font-size: x-large;
+  text-align: center;
   color: white;
 }
 </style>

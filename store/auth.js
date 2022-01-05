@@ -128,5 +128,16 @@ export const actions = {
         this.$cookies.remove(COOKIE_NAME)
     },
 
+    async register(_context, data) {
+        try {
+            const returnData = await this.$api.post('/register', data);
+            return returnData;
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    },
+
 
 }
