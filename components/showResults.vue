@@ -37,6 +37,7 @@
       disable-pagination
       show-select
       hide-default-footer
+      @click:row="handleClick"
     >
       <template slot="no-data">
         <div>Nema testova za prikazati.</div>
@@ -128,6 +129,9 @@ export default {
       const returnData = await this.deleteResults(testIds);
       console.log(returnData);
       await this.$store.dispatch("result/fetchTestResults");
+    },
+    async handleClick(item, row) {
+      await this.$router.push("/result/" + item.id);
     },
   },
 };

@@ -1,6 +1,7 @@
 export const state = () => {
     return ({
         results: null,
+        answers: null,
     });
 }
 
@@ -8,11 +9,19 @@ export const getters = {
     getResults({ results }) {
         return results;
     },
+
+    getAnswers({ answers }) {
+        return answers;
+    },
+
 }
 
 export const mutations = {
     SET_RESULTS(state, results) {
         state.results = results;
+    },
+    SET_ANSWERS(state, answers) {
+        state.answers = answers;
     },
 }
 
@@ -42,5 +51,18 @@ export const actions = {
         }
 
     },
+
+    async fetchAnswers({ commit }, id) {
+        try {
+            const data = await this.$api.get(`/test/${id}/answers`);
+            await commit('SET_ANSWERS', data.data.answers);
+            return data;
+
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
 
 }
