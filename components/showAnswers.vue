@@ -1,8 +1,7 @@
 <template>
   <div>
-    <v-row >
-        <v-spacer></v-spacer>
-      <v-col cols="12" >
+    <v-row>
+      <v-col cols="12">
         <v-btn outlined color="deep-purple" to="/results"
           ><v-icon>mdi-arrow-left-bold</v-icon> Nazad
         </v-btn>
@@ -47,23 +46,31 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Osoba", value: "person" },
-        { text: "Spol", value: "gender", formatter: this.formatGender },
+        { text: "Osoba", value: "person", class: "deep-purple lighten-4 "  },
+        {
+          text: "Spol",
+          value: "gender",
+          formatter: this.formatGender,
+          class: "deep-purple lighten-4 ",
+        },
 
         {
           text: "Emocija",
           value: "emotion",
           formatter: this.formatEmotion,
+          class: "deep-purple lighten-4 ",
         },
         {
           text: "Intenzitet",
           value: "intensity",
           formatter: this.formatIntensity,
+          class: "deep-purple lighten-4 ",
         },
         {
           text: "Odgovor",
           value: "Answer.emotion",
           formatter: this.formatEmotion,
+          class: "deep-purple lighten-4 ",
         },
       ],
     };

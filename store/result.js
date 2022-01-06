@@ -2,6 +2,8 @@ export const state = () => {
     return ({
         results: null,
         answers: null,
+        emotionAnalysis: null,
+        intensityAnalysis: null,
     });
 }
 
@@ -9,9 +11,14 @@ export const getters = {
     getResults({ results }) {
         return results;
     },
-
     getAnswers({ answers }) {
         return answers;
+    },
+    getEmotionAnalysis({ emotionAnalysis }) {
+        return emotionAnalysis;
+    },
+    getIntensityAnalysis({ intensityAnalysis }) {
+        return intensityAnalysis;
     },
 
 }
@@ -22,6 +29,12 @@ export const mutations = {
     },
     SET_ANSWERS(state, answers) {
         state.answers = answers;
+    },
+    SET_EMOTION_ANALYSIS(state, emotionAnalysis) {
+        state.emotionAnalysis = emotionAnalysis;
+    },
+    SET_INTENSITY_ANALYSIS(state, intensityAnalysis) {
+        state.intensityAnalysis = intensityAnalysis;
     },
 }
 
@@ -56,6 +69,20 @@ export const actions = {
         try {
             const data = await this.$api.get(`/test/${id}/answers`);
             await commit('SET_ANSWERS', data.data.answers);
+            return data;
+
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    },
+
+    async fetchAnalysis({ commit }, id) {
+        try {
+            const data = await this.$api.get(`/test/${id}/analysis`);
+            await commit('SET_EMOTION_ANALYSIS', data.data.emotionAnalysis);
+            await commit('SET_INTENSITY_ANALYSIS', data.data.intensityAnalysis);
             return data;
 
         }

@@ -6,6 +6,7 @@
         icons-and-text
         active-class="active"
         slider-color="white"
+        centered
       >
         <v-tab> Odgovori<v-icon>mdi-lead-pencil</v-icon></v-tab>
         <v-tab> Analiza <v-icon>mdi-google-analytics</v-icon></v-tab>
@@ -17,7 +18,9 @@
         </v-tab-item>
 
         <v-tab-item>
-          <v-card flat class="tab-content"> </v-card>
+          <v-card flat class="tab-content">
+            <show-analysis></show-analysis>
+          </v-card>
         </v-tab-item>
       </v-tabs>
     </div>
@@ -26,17 +29,22 @@
 
 <script>
 import ShowAnswers from "~/components/showAnswers";
+import ShowAnalysis from "~/components/showAnalysis";
 
 export default {
   middleware: ["require-auth"],
   components: {
     ShowAnswers,
+    ShowAnalysis,
   },
   data() {
     return {};
   },
   async asyncData({ params, store }) {
-    await Promise.all([await store.dispatch("result/fetchAnswers", params.id)]);
+    await Promise.all([
+      await store.dispatch("result/fetchAnswers", params.id),
+      await store.dispatch("result/fetchAnalysis", params.id),
+    ]);
   },
 };
 </script>

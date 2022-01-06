@@ -6,6 +6,7 @@
         icons-and-text
         active-class="active"
         slider-color="white"
+        centered
       >
         <v-tab> Rezultati<v-icon>mdi-book-open-variant</v-icon></v-tab>
         <v-tab> Novi korisnik <v-icon>mdi-account-plus</v-icon></v-tab>
