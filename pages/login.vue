@@ -48,6 +48,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  middleware: ["no-auth"],
   data() {
     return {
       form: {

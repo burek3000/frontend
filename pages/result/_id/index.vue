@@ -32,7 +32,7 @@ import ShowAnswers from "~/components/showAnswers";
 import ShowAnalysis from "~/components/showAnalysis";
 
 export default {
-  middleware: ["require-auth"],
+  middleware: ["require-auth-expert"],
   components: {
     ShowAnswers,
     ShowAnalysis,

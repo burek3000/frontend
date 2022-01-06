@@ -16,6 +16,12 @@ export const getters = {
     },
     isLoggedIn({ user }) {
         return Boolean(user && user.id);
+    },
+    isUser({ user }) {
+        return Boolean(user.role === 'user');
+    },
+    isExpert({ user }) {
+        return Boolean(user.role === 'expert');
     }
 }
 

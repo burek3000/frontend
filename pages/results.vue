@@ -32,7 +32,7 @@ import ShowResults from "~/components/showResults";
 import NewUser from "~/components/newUser";
 
 export default {
-  middleware: ["require-auth"],
+  middleware: ["require-auth-expert"],
   components: {
     ShowResults,
     NewUser,

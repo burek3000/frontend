@@ -44,7 +44,7 @@ export default {
     ['cookie-universal-nuxt', { parseJSON: false }]
   ],
   router: {
-    middleware: 'require-auth'
+    
   },
  
 

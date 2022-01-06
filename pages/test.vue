@@ -102,7 +102,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  middleware: ["require-auth"],
+  middleware: ["require-auth-user"],
   data() {
     return {
       imageId: 0,
