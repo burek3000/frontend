@@ -3,7 +3,12 @@
     <v-row justify="center">
       <v-col>
         <v-btn outlined color="deep-purple" @click="handleDelete()"
-          ><v-icon>mdi-delete</v-icon> Obriši označeno
+          ><v-icon>mdi-delete</v-icon> Obriši
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-btn outlined color="deep-purple" @click="handleExport()"
+          ><v-icon>mdi-table-arrow-right</v-icon> .xslx
         </v-btn>
       </v-col>
       <v-spacer></v-spacer>
@@ -97,6 +102,8 @@ export default {
 
   methods: {
     ...mapActions("result", ["deleteResults"]),
+    ...mapActions("result", ["exportResults"]),
+
     formatDate(value) {
       const date = new Date(Date.parse(value));
       date.setTime(date.getTime() + new Date().getTimezoneOffset() * 60 * 1000);
@@ -129,6 +136,18 @@ export default {
       const returnData = await this.deleteResults(testIds);
       console.log(returnData);
       await this.$store.dispatch("result/fetchTestResults");
+    },
+
+    async handleExport() {
+      const testIds = this.selected.map((test) => test.id);
+      const response = await this.exportResults(testIds);
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "rezultati.xlsx");
+      document.body.appendChild(link);
+      link.click();
     },
     async handleClick(item, row) {
       await this.$router.push("/result/" + item.id);

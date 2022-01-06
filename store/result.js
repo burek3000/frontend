@@ -65,6 +65,19 @@ export const actions = {
 
     },
 
+    async exportResults(_context, data) {
+        try {
+            console.log(data)
+            return await this.$api.post('/test/excel', data, {
+                responseType: 'arraybuffer'
+            })
+        }
+        catch (e) {
+            console.log(e);
+            return null;
+        }
+    },
+
     async fetchAnswers({ commit }, id) {
         try {
             const data = await this.$api.get(`/test/${id}/answers`);
