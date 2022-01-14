@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Model", value: "model", class: "deep-purple lighten-4 "  },
+        { text: "Model", value: "model", class: "deep-purple lighten-4 " },
         {
           text: "Spol",
           value: "gender",
@@ -71,6 +71,12 @@ export default {
           value: "Answer.emotion",
           formatter: this.formatEmotion,
           class: "deep-purple lighten-4 ",
+        },
+        {
+          text: "Trajanje odgovora",
+          value: "Answer.duration",
+          class: "deep-purple lighten-4 ",
+          formatter: this.formatDuration,
         },
       ],
     };
@@ -117,6 +123,15 @@ export default {
       } else {
         return "red";
       }
+    },
+    formatDuration(value) {
+      const time = value.split(":");
+      var minutes = time[1].replace(/^0/, "");
+      var seconds = time[2].split("+")[0].replace(/^0/, "");
+      if (minutes === "0") {
+        return seconds + "s";
+      }
+      return minutes + "min " + seconds + "s";
     },
   },
 };
