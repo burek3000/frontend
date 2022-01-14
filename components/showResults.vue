@@ -75,6 +75,8 @@ export default {
       selected: [],
       headers: [
         { text: "Ime", value: "User.fullname" },
+        { text: "Spol", value: "User.gender", formatter: this.formatGender },
+        { text: "Dob", value: "User.age" },
         {
           text: "Početak testa",
           value: "startTime",
@@ -120,6 +122,10 @@ export default {
         ":" +
         this.formatDigit(date.getSeconds().toString());
       return dateFormatted;
+    },
+    formatGender(value) {
+      if (value === "F") return "Ž";
+      return value;
     },
     formatDigit(value) {
       if (value.length === 1) {

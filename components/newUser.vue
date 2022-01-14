@@ -12,6 +12,30 @@
             outlined
             :rules="[(v) => !!v || 'Moraš upisati ime i prezime.']"
           />
+
+          <p class="label">Dob</p>
+
+          <v-text-field
+            filled
+            v-model="form.age"
+            dense
+            outlined
+            :rules="[(v) => (!!v && v >= 0) || 'Moraš upisati dob u godinama.']"
+          />
+
+          <p class="label">Spol</p>
+
+          <v-select
+            dense
+            :items="gender"
+            v-model="form.gender"
+            outlined
+            filled
+            :rules="[(v) => !!v || 'Moraš odabrati spol.']"
+          ></v-select>
+        </v-col>
+
+        <v-col>
           <p class="label">Uloga</p>
 
           <v-select
@@ -70,6 +94,8 @@ export default {
       form: {
         fullname: "",
         username: "",
+        age: "",
+        gender: "M",
         role: "user",
         password: "",
       },
@@ -85,6 +111,13 @@ export default {
           value: "user",
         },
       ],
+      gender: [
+        { text: "M", value: "M" },
+        {
+          text: "Ž",
+          value: "F",
+        },
+      ],
     };
   },
   methods: {
@@ -96,6 +129,8 @@ export default {
           username: this.form.username,
           password: this.form.password,
           role: this.form.role,
+          age: this.form.age,
+          gender: this.form.gender,
           fullname: this.form.fullname,
         };
         const returnData = await this.register(data);

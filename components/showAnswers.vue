@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Osoba", value: "person", class: "deep-purple lighten-4 "  },
+        { text: "Model", value: "model", class: "deep-purple lighten-4 "  },
         {
           text: "Spol",
           value: "gender",
