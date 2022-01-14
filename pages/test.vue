@@ -120,6 +120,8 @@ export default {
         message: "",
         timeout: 4000,
       },
+      beginAnswering: "",
+      finishAnswering: "",
       smailey: {
         image: require("/home/mia/code/Završni/frontend/assets/images/smailey.png"),
       },
@@ -157,6 +159,7 @@ export default {
     removeImage() {
       this.showFace = false;
       this.showAnswers = true;
+      this.beginAnswering = new Date();
       if (this.imageId < 9) {
         this.imageId++;
       } else {
@@ -167,7 +170,11 @@ export default {
       if (answer == "start") {
         this.startTime = this.currentTime();
       } else {
-        this.answers.push(answer);
+        this.finishAnswering = new Date();
+        this.answers.push({
+          emotion: answer,
+          duration: this.finishAnswering - this.beginAnswering,
+        });
       }
       this.showAnswers = false;
       if (this.end) {
@@ -194,7 +201,6 @@ export default {
         answers: this.answers,
         questions: this.imageNames,
       };
-
       const returnData = await this.submitResults(data);
       console.log(returnData);
       this.alert.message = returnData.data.message;
