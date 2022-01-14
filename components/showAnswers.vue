@@ -93,7 +93,7 @@ export default {
       } else if (value === "HA") {
         return "Sreća";
       } else if (value === "AN") {
-        return "Ljutnja";
+        return "Srdžba";
       } else if (value === "SP") {
         return "Iznenađenje";
       } else if (value === "DI") {
