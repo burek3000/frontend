@@ -32,6 +32,19 @@
               {{ formatEmotion(item.Answer.emotion) }}
             </v-chip>
           </template>
+
+          <template v-slot:[`item.link`]="{ item }">
+            <a target="_blank" :href="link(item)">
+              {{
+                item.model +
+                item.gender +
+                "_" +
+                item.emotion +
+                "_" +
+                item.intensity
+              }}
+            </a>
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -77,6 +90,11 @@ export default {
           value: "Answer.duration",
           class: "deep-purple lighten-4 ",
           formatter: this.formatDuration,
+        },
+        {
+          text: "Slika",
+          value: "link",
+          class: "deep-purple lighten-4 ",
         },
       ],
     };
@@ -132,6 +150,18 @@ export default {
         return seconds + "s";
       }
       return minutes + "min " + seconds + "s";
+    },
+
+    link(item) {
+      return (
+        "http://localhost:4000/images/" +
+        item.model +
+        item.gender +
+        "_" +
+        item.emotion +
+        "_" +
+        item.intensity + '.JPG'
+      );
     },
   },
 };
