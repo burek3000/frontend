@@ -243,9 +243,7 @@ export default {
 }
 
 .end-container {
-  background-image: url("~/assets/images/finish2-bg.jpg") !important;
-  background-size: cover;
-  background-position: center;
+  background-color: black;
   height: 100%;
   width: 100%;
 }
@@ -260,7 +258,7 @@ export default {
 
 .text-end {
   padding-top: 6rem;
-  color: black;
+  color: white;
   font-size: x-large;
   text-align: center;
 }
