@@ -123,7 +123,7 @@ export default {
       beginAnswering: "",
       finishAnswering: "",
       smailey: {
-        image: require("/home/mia/code/Završni/frontend/assets/images/smailey.png"),
+        image: require("~/assets/images/smailey.png"),
       },
     };
   },
