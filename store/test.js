@@ -32,7 +32,7 @@ export const actions = {
             await commit('SET_IMAGE_NAMES', data.randomImages)
 
             const imageUrl = data.randomImages.map(
-                (name) => "http://localhost:4000/images/" + name + ".JPG");
+                (name) => `${process.env.API_URL}/images/${name}.JPG`);
 
             await commit('SET_IMAGE_URLS', imageUrl)
             return imageUrl;

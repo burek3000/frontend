@@ -153,15 +153,7 @@ export default {
     },
 
     link(item) {
-      return (
-        "http://localhost:4000/images/" +
-        item.model +
-        item.gender +
-        "_" +
-        item.emotion +
-        "_" +
-        item.intensity + '.JPG'
-      );
+      return `${process.env.API_URL}/images/${item.model}${item.gender}_${item.emotion}_${item.intensity}.JPG`;
     },
   },
 };

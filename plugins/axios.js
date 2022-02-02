@@ -1,7 +1,7 @@
 export default function ({ $axios, store }, inject) {
   const api = $axios.create({})
 
-  api.setBaseURL('http://localhost:4000')
+  api.setBaseURL(process.env.API_URL)
   api.setHeader('Content-Type', 'application/json')
 
   api.interceptors.request.use(
