@@ -9,7 +9,14 @@
         započeli test kliknite na gumb ispod.
       </p>
 
-      <v-btn class="btn-start" dark rounded x-large @click="nextImage('start')">
+      <v-btn
+        :loading="imagesLoading"
+        class="btn-start"
+        dark
+        rounded
+        x-large
+        @click="nextImage('start')"
+      >
         započni test
       </v-btn>
     </div>
@@ -111,6 +118,8 @@ export default {
       showStart: true,
       showPlus: false,
       showEnd: false,
+      imagesLoading: true,
+      images: [],
       end: false,
       answers: [],
       startTime: "",
@@ -129,7 +138,7 @@ export default {
   },
 
   async fetch({ store }) {
-    await Promise.all([await store.dispatch("test/fetchImages")]);
+    await store.dispatch("test/fetchImages");
   },
 
   methods: {
@@ -165,6 +174,22 @@ export default {
       } else {
         this.end = true;
       }
+    },
+    async preloadImages() {
+      const preloadImage = async (url) => {
+        const resp = await fetch(url);
+        const blob = await resp.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+
+        return new Promise((resolve) => {
+          reader.addEventListener("load", () => resolve(reader.result))
+        });
+      };
+
+      this.images = await Promise.all(
+        this.imageUrls.map((url) => preloadImage(url))
+      );
     },
     async nextImage(answer) {
       if (answer == "start") {
@@ -213,8 +238,17 @@ export default {
       title: "Test",
     };
   },
+  async mounted() {
+    this.images = this.imageUrls;
+    this.imagesLoading = true;
+    try {
+      await this.preloadImages();
+    } finally {
+      this.imagesLoading = false;
+    }
+  },
   computed: {
-    ...mapGetters({ images: "test/getImageUrls" }),
+    ...mapGetters({ imageUrls: "test/getImageUrls" }),
     ...mapGetters({ imageNames: "test/getImageNames" }),
   },
 };
